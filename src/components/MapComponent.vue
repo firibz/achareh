@@ -7,67 +7,87 @@
 </template>
 
 <script>
-import {ref, nextTick, onMounted} from 'vue'
-import L from 'leaflet'
+import { ref, nextTick, onMounted } from 'vue';
+import L from 'leaflet';
+
+// Import Leaflet's CSS (make sure the path is correct)
+import 'leaflet/dist/leaflet.css';
+
+// Import your custom marker icons
+import markerIcon2x from 'leaflet/dist/images/marker-icon-2x.png';
+import markerIcon from 'leaflet/dist/images/marker-icon.png';
+import markerShadow from 'leaflet/dist/images/marker-shadow.png';
 
 export default {
     emits: ['location-found'],
-    setup(props, {emit}) {
-        const latLng = ref({lat: null, lng: null})
-        const mapInstance = ref(null)
-        let currentMarker = null
+    setup(props, { emit }) {
+        const latLng = ref({ lat: null, lng: null });
+        const mapInstance = ref(null);
+        let currentMarker = null;
 
         onMounted(() => {
             nextTick(() => {
+                // Fixing the marker icon paths
+                delete L.Icon.Default.prototype._getIconUrl;
+                L.Icon.Default.mergeOptions({
+                    iconRetinaUrl: markerIcon2x,
+                    iconUrl: markerIcon,
+                    shadowUrl: markerShadow,
+                });
+
                 if (!mapInstance.value) {
-                    mapInstance.value = L.map('map').setView([35.6892, 51.3890], 13)
+                    mapInstance.value = L.map('map').setView([35.6892, 51.3890], 13);
                     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                        attribution: '&copy; OpenStreetMap contributors'
-                    }).addTo(mapInstance.value)
+                        attribution: '&copy; OpenStreetMap contributors',
+                    }).addTo(mapInstance.value);
 
                     mapInstance.value.on('click', function (e) {
                         if (currentMarker) {
-                            mapInstance.value.removeLayer(currentMarker)
+                            mapInstance.value.removeLayer(currentMarker);
                         }
-                        latLng.value = e.latlng
-                        currentMarker = L.marker(e.latlng).addTo(mapInstance.value)
-                        emit('location-found', e.latlng)
-                    })
+                        latLng.value = e.latlng;
+                        currentMarker = L.marker(e.latlng).addTo(mapInstance.value);
+                        emit('location-found', e.latlng);
+                    });
                 } else {
-                    mapInstance.value.invalidateSize()
+                    mapInstance.value.invalidateSize();
                 }
-            })
-        })
+            });
+        });
 
         const getCurrentLocation = () => {
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(position => {
-                    const {latitude, longitude} = position.coords
-                    if (mapInstance.value) {
-                        const currentLocation = L.latLng(latitude, longitude)
-                        latLng.value = currentLocation
-                        mapInstance.value.setView(currentLocation, 13)
-                        if (currentMarker) {
-                            mapInstance.value.removeLayer(currentMarker)
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        if (mapInstance.value) {
+                            const currentLocation = L.latLng(latitude, longitude);
+                            latLng.value = currentLocation;
+                            mapInstance.value.setView(currentLocation, 13);
+                            if (currentMarker) {
+                                mapInstance.value.removeLayer(currentMarker);
+                            }
+                            currentMarker = L.marker(currentLocation).addTo(mapInstance.value);
+                            emit('location-found', currentLocation);
                         }
-                        currentMarker = L.marker(currentLocation).addTo(mapInstance.value)
-                        emit('location-found', currentLocation)
+                    },
+                    (error) => {
+                        console.error('Error getting current location:', error);
                     }
-                }, error => {
-                    console.error('Error getting current location:', error)
-                })
+                );
             } else {
-                console.error('Geolocation is not supported by this browser.')
+                console.error('Geolocation is not supported by this browser.');
             }
-        }
+        };
 
         return {
             latLng,
             getCurrentLocation,
-            mapInstance
-        }
-    }
-}
+            mapInstance,
+        };
+    },
+};
+
 </script>
 
 <style scoped>
