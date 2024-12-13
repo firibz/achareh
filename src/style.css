@@ -1,0 +1,97 @@
+@import url('node_modules/leaflet/dist/leaflet.css');
+
+:root {
+  --system-primary: #00BFA5 !important; /* Change to your desired primary color */
+  --system-danger: #E61236 !important;
+  --system-text: #37474F !important;
+}
+
+/* Import Bootstrap's CSS */
+
+:root {
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+html,body {
+  font-family: 'Vazir', sans-serif !important;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+  direction: rtl;
+  color: var(--system-text);
+}
+
+#app{
+  background-color: #F6F9FA;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
+.system-input.form-control{
+  box-shadow: unset !important;
+}
+.system-input.form-control.is-valid,
+.system-input.form-control.is-valid:focus{
+  border-color: var(--system-primary) !important;
+}
+.system-input.form-control.is-invalid,
+.system-input.form-control.is-invalid:focus{
+  border-color: var(--system-danger) !important;
+}
+.system-input-group .invalid-feedback{
+  color: var(--system-danger) !important;
+}
+
+.submit-btn{
+  width: 224px;
+  height: 46px;
+}
+.submit-btn.primary{
+  background-color: var(--system-primary) !important;
+  color: #ffffff;
+  border: unset !important;
+}
+.submit-btn.outline{
+  background-color: transparent !important;
+  color: var(--system-primary) !important;
+  border: 1.5px solid var(--system-primary) !important;;
+}
+
+.system-radio .form-check-input:checked,
+.system-radio .form-check-input.is-valid:checked{
+  background-color: var(--system-primary);
+  border-color: var(--system-primary);
+}
+.system-radio .form-check-input.is-valid{
+  border-color: var(--system-primary);
+}
+.system-radio .form-check-label {
+  color: var(--system-text) !important;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.system-pagination .page-link.active, .active > .page-link{
+  background-color: var(--system-primary) !important;
+  border-color: var(--system-primary) !important;
+}
+
+.system-pagination .page-item:not(.active) .page-link{
+  color: var(--system-primary) !important;
+}
+.system-pagination .page-item.active .page-link{
+  color: #ffffff !important;
+}
