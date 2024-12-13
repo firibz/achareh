@@ -54,11 +54,18 @@
                             <b-col md="4" class="mb-4">
                                 <form-input
                                     v-model="form.phone"
-                                    label="تلفن ثابت (اختیاری)"
                                     name="phone"
                                     placeholder="مثال: 0211234567"
                                     inputmode="numeric"
-                                    rules="required|numeric|length:11"/>
+                                    rules="numeric|length:11">
+                                    <template #starting-label>
+                                        <span>تلفن ثابت</span>
+                                        <span class="text-subtitle">(اختیاری)</span>
+                                    </template>
+                                    <template #ending-label>
+                                        <span class="text-hint"> *با پیش شماره</span>
+                                    </template>
+                                </form-input>
                             </b-col>
                             <b-col md="8" class="mb-4">
                                 <form-input
