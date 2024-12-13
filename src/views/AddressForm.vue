@@ -48,6 +48,7 @@
                                     label="تلفن همراه"
                                     name="mobile"
                                     placeholder="مثال: 09123456789"
+                                    inputmode="numeric"
                                     rules="required|mobile"/>
                             </b-col>
                             <b-col md="4" class="mb-4">
@@ -56,6 +57,7 @@
                                     label="تلفن ثابت (اختیاری)"
                                     name="phone"
                                     placeholder="مثال: 0211234567"
+                                    inputmode="numeric"
                                     rules="required|numeric|length:11"/>
                             </b-col>
                             <b-col md="8" class="mb-4">
