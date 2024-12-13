@@ -81,3 +81,17 @@ defineProps({
         flex-grow: 1 !important;
     }
 </style>
+<style>
+.system-input::placeholder {
+    color: #B6B6B6 !important;
+}
+
+.system-input:-ms-input-placeholder {
+    color: #B6B6B6 !important;
+}
+
+.system-input::-ms-input-placeholder {
+    color: #B6B6B6 !important;
+}
+
+</style>
